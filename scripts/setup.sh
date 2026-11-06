@@ -22,24 +22,19 @@ elif [[ -e /cvmfs/larsoft.opensciencegrid.org/products ]] ; then
     # environment for CERN and FERMILAB's machines
     products_dir=/cvmfs/larsoft.opensciencegrid.org/products
 
-    #this was used for the last root version. To be removed.
-    #gcc_version=v8_2_0         
-    #root_version=v6_18_04d         
-    #tbb_version=v2019_3
-    #make_version=v3_14_3
-
-    gcc_version=v9_3_0         
-    root_version=v6_22_08d         
-    tbb_version=v2021_1_1
-    cmake_version=v3_22_2
+    gcc_version=v12_1_0         
+    root_version=v6_28_12         
+    tbb_version=v2021_9_0
+    cmake_version=v3_27_4
+    nlohmann_json_version=v3_11_2
+    gsl_version=v2_6a
     
-    #this was used for the last root version. To be removed.
-    #root_compiler=Linux64bit+3.10-2.17-e19-prof                  
-    #tbb_compiler=Linux64bit+3.10-2.17-e19-prof
     gcc_compiler=Linux64bit+3.10-2.17
-    root_compiler=Linux64bit+3.10-2.17-e20-p392-prof
-    tbb_compiler=Linux64bit+3.10-2.17-e20
+    root_compiler=Linux64bit+3.10-2.17-e26-p3915-prof
+    tbb_compiler=Linux64bit+3.10-2.17-e26
     cmake_compiler=Linux64bit+3.10-2.17
+    gsl_compiler=Linux64bit+3.10-2.17      # PROVISIONAL, ver abajo
+
 elif [[ ${HOSTNAME} =~ "portcervera.ific.uv.es" ||  ${HOSTNAME} =~ "Anselmo-Cerveras-MacBook-Pro-II.local" ]]; then
     # environment for Anselmo's laptop
     root_dir=/hep/sw/root-6.12.06/myroot
@@ -53,8 +48,11 @@ if [[ x$products_dir != x ]] && [[ -z "$TBBROOT" ]] ; then
     export tbb_dir=$products_dir/tbb/$tbb_version/$tbb_compiler
     export root_dir=$products_dir/root/$root_version/$root_compiler
     export cmake_dir=$products_dir/cmake/$cmake_version/$cmake_compiler
+    export nlohmann_json_dir=$products_dir/nlohmann_json/$nlohmann_json_version
+    export gsl_dir=$products_dir/gsl/$gsl_version/$gsl_compiler
 
-    export LD_LIBRARY_PATH=$gcc_dir/lib64:$gcc_dir/lib:$tbb_dir/lib:$LD_LIBRARY_PATH         
+
+    export LD_LIBRARY_PATH=$gcc_dir/lib64:$gcc_dir/lib:$tbb_dir/lib:$gsl_dir/lib:$LD_LIBRARY_PATH
     export PATH=$cmake_dir/bin/:$gcc_dir/bin/:$PATH
 fi
 
@@ -77,7 +75,7 @@ export DYLD_LIBRARY_PATH=$HIGHLANDPATH/lib:$DYLD_LIBRARY_PATH
 export   LD_LIBRARY_PATH=$HIGHLANDPATH/lib:$LD_LIBRARY_PATH
 
 
-export CMAKE_PREFIX_PATH=$HIGHLANDPATH:$ROOTSYS
+export CMAKE_PREFIX_PATH=$HIGHLANDPATH:$ROOTSYS:$nlohmann_json_dir${CMAKE_PREFIX_PATH:+:$CMAKE_PREFIX_PATH}
 
 #export HIGHLAND_PACKAGE_HIERARCHY=baseAnalysis:highlandTools:psycheSelections:highlandIO:highlandCorrections:highlandUtils:highlandEventModel:highlandCore:psycheIO:psycheDUNEUtils:psycheUtils:psycheEventModel:psycheCore
 export HIGHLAND_PACKAGE_HIERARCHY=psycheCore

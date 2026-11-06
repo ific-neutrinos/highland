@@ -1,5 +1,5 @@
 # -*- cmake -*-
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.12)
 PROJECT(HighLAND)
 
 
@@ -16,7 +16,7 @@ file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/dict")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "-g -pipe -Wall -ansi -Wnon-virtual-dtor -fpic -Woverloaded-virtual -std=c++17")
+set(CMAKE_CXX_FLAGS "-g -pipe -Wall -Wnon-virtual-dtor -fpic -Woverloaded-virtual")
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}")
 
